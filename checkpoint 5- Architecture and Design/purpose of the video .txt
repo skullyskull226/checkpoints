@@ -1,0 +1,35 @@
+purpose of the video :
+
+* presenting the Managing Centralized Authentication 
+
+* rely on Active Directory as the authentication server
+
+* Use RADIUS to athenticate administrative users who manage the pfSense firewall appliance itself, rather than authentication of remote access VPN or wireless users 
+
+* configure the the UTM1 virtual machine running pfSense security appliance as a RADIUS client, that will lead it to pass authentication attempts to DC1
+
+tool used :
+
+1- Network Policy Server 
+
+* to set up a new Radius client 
+
+* add new Network Policy 
+  * Specify Conditions 
+  * specify a Windows Group 
+  * configure authentication method 
+  * add standard RADIUS Attribute
+  * attribute information 
+
+2- Explorer  
+
+3- pfSense
+  * authentication server
+  * server settings 
+  * LDAP server settings 
+  * RADIUS Server settings
+  * Group Properties
+  * Assigned Privileges 
+  * Group Privileges
+
+4- Active Directory as authentication server
