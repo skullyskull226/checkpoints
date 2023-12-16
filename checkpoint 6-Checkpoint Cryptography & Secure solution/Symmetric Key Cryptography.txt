@@ -1,0 +1,144 @@
+Symmetric Key Cryptography:
+
+a. Encrypt the plaintext "HELLO" using a Caesar cipher with a shift of 3.
+
+┌──(mrrobot㉿DESKTOP-Q516LBS)-[~]
+└─$ echo "HELLO" | tr '[A-Z]' '[X-ZA-W]'
+EBIIL
+
+ b. Decrypt the ciphertext "VWDQGD" using a Caesar cipher with a shift of 3. 
+
+┌──(mrrobot㉿DESKTOP-Q516LBS)-[~]
+└─$ echo "VWDQGD" | tr 'A-Z' 'X-ZA-W'
+STANDA
+
+c. Encrypt the plaintext "OPENAI" using a Vigenère cipher with the keyword "CRYPTO".
+
+┌──(mrrobot㉿DESKTOP-Q516LBS)-[~]
+└─$ echo "OPENAI" | openssl enc -e -aes-256-ecb -k "CRYPTOCRYPTOCRY"
+*** WARNING : deprecated key derivation used.
+Using -iter or -pbkdf2 would be better.
+Salted__  w⸮H   
+ V Cu      M  
+
+
+Asymmetric Key Cryptography:
+
+a. Generate a key pair using RSA encryption with a prime modulus of 17 and a public exponent of 5.
+
+┌──(mrrobot㉿DESKTOP-Q516LBS)-[~]
+└─$ openssl genpkey -algorithm RSA -out private_key.pem -aes256
+openssl rsa -pubout -in private_key.pem -out public_key.pem
+......+.....+.......+...+.........+..+.+........+.+........+.+.....+.+......+..............+....+.....+....+..+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*...........+..+..........+..+.+......+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*....+.........+.......+..+...+...+..........+.....+.+.....+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+....+..+.........+.+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+...........+.+.....+.......+..+..........+...+......+..+...+.+.........+..............+...+...+.+...+..+......+.......+......+.........+...............+.....+......+.+........+.+..+...+.......+...+..............+............+..........+......+...+............+..+.+..+.......+..+....+..+...+..........+..+...+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++*.+......+......+.........+.+.................................+..+.+...+.........+..+...+.+.................+....+..............+.+..............+.......+...+............+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Enter PEM pass phrase:
+Verifying - Enter PEM pass phrase:
+Enter pass phrase for private_key.pem:
+writing RSA key
+
+┌──(mrrobot㉿DESKTOP-Q516LBS)-[~]
+└─$ ls
+private_key.pem  public_key.pem
+
+
+
+
+
+### a. DES vs. AES:
+
+**DES (Data Encryption Standard):**
+- **Strengths:**
+  - Pioneering Algorithm: DES was one of the first widely used encryption algorithms and played a significant role in cryptographic history.
+  - Simplicity: The algorithm is relatively simple, making it efficient in terms of hardware implementation.
+- **Weaknesses:**
+  - Key Length: DES has a fixed key length of 56 bits, which is now considered too short for secure encryption due to advances in computing power.
+  - Vulnerability: DES has known vulnerabilities, including susceptibility to brute-force attacks.
+
+**AES (Advanced Encryption Standard):**
+- **Strengths:**
+  - Key Length Options: AES supports key lengths of 128, 192, and 256 bits, providing a higher level of security.
+  - Security: AES is considered secure against all known practical attacks when used with an appropriate key length.
+  - Algorithm Structure: AES has a well-defined and structured design, providing a higher level of assurance.
+- **Weaknesses:**
+  - Advanced Hardware: In some cases, advanced hardware attacks may pose a potential threat, but this is generally not a practical concern for most applications.
+
+**Comparison:**
+- **Key Length:** One of the most significant differences is the key length. While DES has a fixed key length of 56 bits, AES provides options for longer key lengths, making it more resistant to brute-force attacks.
+- **Security:** AES is considered more secure due to its robustness against various cryptographic attacks and its adaptability to different key lengths.
+- **Popularity:** AES has become the standard encryption algorithm in various applications, replacing DES due to its vulnerabilities.
+
+### b. Hash Function:
+
+**Hash Function:**
+- A hash function is a one-way mathematical function that takes an input (or 'message') and produces a fixed-size string of characters, which is typically a hash value or digest.
+- Hash functions are designed to be fast and efficient, producing a unique output for different inputs.
+- They are widely used for data integrity verification, password storage, digital signatures, and various cryptographic applications.
+
+**Example of a Commonly Used Hash Function:**
+- **SHA-256 (Secure Hash Algorithm 256-bit):**
+  - SHA-256 is a widely used hash function that produces a fixed-size 256-bit hash value.
+  - It is part of the SHA-2 family and is considered secure for various cryptographic applications.
+  - SHA-256 is commonly used in blockchain technology, digital signatures, and password storage.
+
+### c. Hybrid Cryptosystem:
+
+**Advantages:**
+- **Efficiency:** Symmetric encryption is generally faster than asymmetric encryption. Combining both allows for efficient data encryption and transmission.
+- **Key Distribution:** Asymmetric encryption is used for secure key exchange, addressing the key distribution problem inherent in symmetric encryption.
+- **Security:** The hybrid approach leverages the strengths of both symmetric and asymmetric encryption, providing a balance between efficiency and security.
+- **Practical Implementation:** Asymmetric encryption is computationally expensive, and using it only for key exchange while employing symmetric encryption for actual data transfer optimizes performance.
+
+In a typical scenario, a hybrid cryptosystem might involve using asymmetric encryption (e.g., RSA) for key exchange and symmetric encryption (e.g., AES) for encrypting the actual data. This approach combines the efficiency of symmetric encryption with the secure key exchange facilitated by asymmetric encryption.
+
+
+
+
+
+
+
+ a. Design a simple encryption program in your preferred programming language that encrypts a user's input using a symmetric key.
+
+from cryptography.fernet import Fernet
+
+Generate a symmetric key
+key = Fernet.generate_key()
+cipher = Fernet(key)
+
+User input
+user_input = input("Enter the text to encrypt: ")
+
+Encrypt the user's input
+encrypted_text = cipher.encrypt(user_input.encode())
+
+print("Symmetric Key:", key)
+print("Encrypted text:", encrypted_text)
+
+
+b. Implement a function that calculates the MD5 hash of a given input string.
+
+MD5 Hash Calculation Function
+You can use the hashlib library in Python to calculate the MD5 hash of a given input string. Here's an example function:
+
+import hashlib
+
+def calculate_md5_hash(input_string):
+    md5_hash = hashlib.md5(input_string.encode()).hexdigest()
+    return md5_hash
+
+
+
+ c. Research and explain the concept of a digital signature and its role in verifying message authenticity.
+
+Digital Signature
+A digital signature is a cryptographic technique used to validate the authenticity and integrity of a message, digital document, or software. It provides a way to ensure that the message or document has not been altered and was indeed created by a particular entity.
+
+Role in Verifying Message Authenticity
+Authentication: A digital signature provides a way to verify the identity of the sender. The signature is created using the sender's private key, and it can be verified using the sender's public key.
+Integrity: The digital signature ensures that the message has not been tampered with during transmission. Any change to the message would result in a signature verification failure.
+Non-repudiation: It prevents the sender from denying the authenticity of the message. Since the signature can only be generated using the sender's private key, the sender cannot deny sending the message.
+
+In summary, a digital signature plays a crucial role in ensuring the authenticity, integrity, and non-repudiation of digital messages and documents.
+
+
+
+
